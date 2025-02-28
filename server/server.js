@@ -2,11 +2,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const connectDB = require("./config/database.js");
-
+const connectDB = require("./config/database");
+const colors = require("colors");
 
 dotenv.config();
+
 connectDB();
+
+
 
 const corsOptions = {
   origin: ["https://localhost:5173"],
