@@ -11,7 +11,7 @@ exports.getTodos = async (req, res) => {
     return res.status(200).json({
       success: true,
       count: todos.length,
-      data: todos,
+      todoList: todos,
     });
   } catch (err) {
     return res.status(500).json({
