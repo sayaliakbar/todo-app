@@ -1,16 +1,29 @@
 import crossIcon from "../assets/images/icon-cross.svg";
 import PropTypes from "prop-types";
+import axios from "axios";
 
-export default function TodoListTask({ text, id }) {
+const apiUrl = import.meta.env.VITE_API_URL;
+
+export default function TodoListTask({ text, id , status,}) {
   TodoListTask.propTypes = {
     text: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    status: PropTypes.bool.isRequired,
+    setTodoList: PropTypes.func.isRequired,
   };
+  
+const handleStatusChange = async (e) => {
+await axios.put(`${apiUrl}/api/todos/${e.target.id}/toggle`);
+}
+
+  
   return (
     <li className="border-b dark:border-white/50 border-black/25 py-3 sm:py-4 pl-11 sm:pl-16 pr-10 relative group hover:bg-gray-200 dark:hover:bg-gray-900 cursor-pointer break-words">
       <input
         type="checkbox"
         id={id}
+        defaultChecked={status}
+        onChange={handleStatusChange}
         className="absolute left-4 top-4 sm:left-5 peer appearance-none w-4 h-4 sm:w-6 sm:h-6 border border-black/25 checked:border-none  rounded-full focus:outline-none shrink-0 checked:bg-gradient-to-br from-cyan-400 to-purple-500 dark:border-white/25 hover:ring-2 after:content-[''] after:w-full after:h-full after:rounded-full after:absolute after:left-0 after:top-0 after:bg-no-repeat after:bg-center after:bg-[length:12px] checked:after:bg-[url(./assets/images/icon-check.svg)]"
       />
       <label
