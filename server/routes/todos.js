@@ -1,12 +1,12 @@
 const express  = require("express");
 const router = express.Router();
 
-const { getTodos } = require("../controllers/todoController");
+const { getTodos, addTodo } = require("../controllers/todoController");
 
 router
   .route("/")
-  .get(getTodos);
-//   .post(addTodo);
+  .get(getTodos)
+  .post(addTodo);
 
 // router
 //     .route("/:id")
