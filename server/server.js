@@ -9,6 +9,7 @@ const morgan = require("morgan");
 
 dotenv.config();
 
+
 connectDB();
 
 const corsOptions = {
@@ -16,8 +17,10 @@ const corsOptions = {
 };
 
 const app = express();
+app.use(express.json());
 
 app.use(cors(corsOptions));
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:5173"); // Allow requests from this specific origin
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"); // Specify allowed methods
