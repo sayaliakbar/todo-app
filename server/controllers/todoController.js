@@ -51,3 +51,105 @@ exports.addTodo = async (req, res)=>{
         });
     }
 }
+
+// @desc Delete a todo
+// @route DELETE /api/todos/:id
+// @access Public
+
+exports.deleteTodo = async (req, res) => {
+
+    try {
+      const todo = await Todo.findById(req.params.id);
+     
+  
+      if (!todo) {
+        return res.status(404).json({
+          success: false,
+          error: "No todo found",
+        });
+      }
+  
+      await todo.deleteOne();
+  
+      return res.status(200).json({
+        success: true,
+        message: "Todo deleted",
+        data: todo,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        error: "Server Error",
+      });
+    }
+}
+
+// @desc Update a todo
+// @route PUT /api/todos/:id
+// @access Public
+
+exports.updateTodo = async (req, res) => {
+   
+    try {
+      const { title } = req.body;
+  
+      if (!title) {
+        return res.status(400).json({
+          success: false,
+          error: "Please provide a todo item",
+        });
+      }
+  
+      const todo = await Todo.findById(req.params.id);
+  
+      if (!todo) {
+        return res.status(404).json({
+          success: false,
+          error: "No todo found",
+        });
+      }
+  
+     await todo.updateOne(req.body);
+
+  
+      return res.status(200).json({
+        success: true,
+        message: "Todo updated",
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        error: "Server Error",
+      });
+    }
+}
+
+// @desc Toggle todo completion status
+// @route PATCH /api/todos/:id/toggle
+// @access Public
+
+exports.toggleTodoStatus = async (req, res) => {
+    try {
+        const todo = await Todo.findById(req.params.id);
+
+        if (!todo) {
+            return res.status(404).json({
+                success: false,
+                error: "No todo found",
+            });
+        }
+
+        todo.completed = !todo.completed;
+        await todo.save();
+
+        return res.status(200).json({
+            success: true,
+            data: todo,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            error: "Server Error",
+        });
+    }
+};
