@@ -1,6 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const dotenv = require("dotenv");
+const connectDB = require("./config/database.js");
+
+
+dotenv.config();
+connectDB();
+
 const corsOptions = {
   origin: ["https://localhost:5173"],
 };
@@ -14,16 +21,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/api", (req, res) => {
-  res.json({
-    todoList: [
-      { task: "dance", id: 1 },
-      { task: "play", id: 2 },
-      { task: "care", id: 3 },
-    ],
-  });
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to the API" });
 });
 
-app.listen(8080, () => {
-  console.log("Server started on port 5000");
+app.listen(process.env.PORT, () => {
+  console.log("Server started on port " + process.env.PORT);
 });
