@@ -4,18 +4,19 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/database");
 const colors = require("colors");
+const todos = require("./routes/todos");
+const morgan = require("morgan");
 
 dotenv.config();
 
 connectDB();
-
-
 
 const corsOptions = {
   origin: ["https://localhost:5173"],
 };
 
 const app = express();
+
 app.use(cors(corsOptions));
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:5173"); // Allow requests from this specific origin
@@ -24,10 +25,18 @@ app.use((req, res, next) => {
   next();
 });
 
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
+app.use("/api/todos", todos);
+
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the API" });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log("Server started on port " + process.env.PORT);
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold);
 });
