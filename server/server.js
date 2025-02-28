@@ -13,7 +13,7 @@ dotenv.config();
 connectDB();
 
 const corsOptions = {
-  origin: ["https://localhost:5173"],
+  origin: ["http://localhost:5173"],
 };
 
 const app = express();
