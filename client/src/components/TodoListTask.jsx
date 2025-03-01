@@ -18,7 +18,7 @@ export default function TodoListTask({ text, id, status }) {
   return (
     <li className="border-b dark:border-white/50 border-black/25 py-3 sm:py-4 pl-11 sm:pl-16 pr-10 relative group hover:bg-gray-200 dark:hover:bg-gray-900 cursor-pointer break-words">
       {error ? (
-        <div>Error: {error.status}</div>
+        <div className="text-red-500 text-sm">Error: {error.status}</div>
       ) : (
         <>
           <input
