@@ -26,6 +26,7 @@ export const todoApi = createApi({
         url: `${id}/toggle`,
         method: "PUT",
       }),
+      invalidatesTags: ["Todos"], // Refetch todos after toggling
     }),
     deleteTodo: builder.mutation({
       query: (id) => ({
