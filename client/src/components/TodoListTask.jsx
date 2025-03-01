@@ -1,6 +1,9 @@
 import crossIcon from "../assets/images/icon-cross.svg";
 import PropTypes from "prop-types";
-import { useToggleTodoMutation } from "../services/todo.js";
+import {
+  useToggleTodoMutation,
+  useDeleteTodoMutation,
+} from "../services/todo.js";
 
 export default function TodoListTask({ text, id, status }) {
   TodoListTask.propTypes = {
@@ -10,9 +13,14 @@ export default function TodoListTask({ text, id, status }) {
   };
 
   const [toggleTodo, { error }] = useToggleTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
 
   const handleStatusChange = async (e) => {
     await toggleTodo(e.target.id);
+  };
+
+  const handleDeleteTodo = async (e) => {
+    await deleteTodo(e.target.id);
   };
 
   return (
@@ -26,7 +34,7 @@ export default function TodoListTask({ text, id, status }) {
             id={id}
             checked={status}
             onChange={handleStatusChange}
-            className="absolute left-4 top-4 sm:left-5 peer appearance-none w-4 h-4 sm:w-6 sm:h-6 border border-black/25 checked:border-none  rounded-full focus:outline-none shrink-0 checked:bg-gradient-to-br from-cyan-400 to-purple-500 dark:border-white/25 hover:ring-2 after:content-[''] after:w-full after:h-full after:rounded-full after:absolute after:left-0 after:top-0 after:bg-no-repeat after:bg-center after:bg-[length:12px] checked:after:bg-[url(./assets/images/icon-check.svg)]"
+            className="cursor-pointer absolute left-4 top-4 sm:left-5 peer appearance-none w-4 h-4 sm:w-6 sm:h-6 border border-black/25 checked:border-none  rounded-full focus:outline-none shrink-0 checked:bg-gradient-to-br from-cyan-400 to-purple-500 dark:border-white/25 hover:ring-2 after:content-[''] after:w-full after:h-full after:rounded-full after:absolute after:left-0 after:top-0 after:bg-no-repeat after:bg-center after:bg-[length:12px] checked:after:bg-[url(./assets/images/icon-check.svg)]"
           />
           <label
             htmlFor={id}
@@ -34,11 +42,15 @@ export default function TodoListTask({ text, id, status }) {
           >
             {text}
           </label>
-          <button className="group-hover:visible invisible">
+          <button
+            onClick={handleDeleteTodo}
+            className="group-hover:visible invisible"
+          >
             <img
-              className="absolute top-1/2 right-4 -translate-y-1/2  w-3 h-3 "
+              className="absolute top-1/2 right-4 -translate-y-1/2  w-4 h-4 hover:opacity-100 opacity-50 "
               src={crossIcon}
               alt="Remove item"
+              id={id}
             />
           </button>
         </>
