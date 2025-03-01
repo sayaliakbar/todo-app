@@ -7,16 +7,22 @@ const apiUrl = import.meta.env.VITE_API_URL;
 export const todoApi = createApi({
   reducerPath: 'todoApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${apiUrl}/api/todos` }),
+  tagTypes: ['Todos'], // Add a tag for todos
   endpoints: (builder) => ({
     getTodos: builder.query({
         query: () => '',
+        providesTags: ['Todos'], // Mark this query as providing "Todos"
     }),
     addTodo: builder.mutation({
-        query: (text) => ({
+        query: (title) => ({
+            
             url: '',
             method: 'POST',
-            body: { text },
+            body: { title },
+            
         }),
+        invalidatesTags: ['Todos'], // Invalidate "Todos" to trigger refetch
+        
     }),
     toggleTodo: builder.mutation({
         query: (id) => ({
