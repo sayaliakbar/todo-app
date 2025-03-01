@@ -1,10 +1,9 @@
-import { useRef, useState } from "react";
+
 
 
 export default function CreateTodo() {
 
 
-  const inputRef = useRef(null);
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -15,7 +14,7 @@ export default function CreateTodo() {
       className="w-full relative mt-4 sm:mt-0 xs:drop-shadow-lg"
     >
       <input
-        ref={inputRef}
+   
         className="leading-none w-full py-4 sm:py-5 px-11 sm:px-16 rounded-lg text-xs sm:text-body dark:bg-gray-800 dark:hover:bg-gray-900 hover:bg-gray-200 cursor-pointer"
         type="text"
         placeholder="Create a new todo..."
