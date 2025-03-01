@@ -20,10 +20,10 @@ export default function CreateTodo() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full relative mt-4 sm:mt-0 xs:drop-shadow-lg"
+      className="w-full relative mt-4 sm:mt-0 xs:drop-shadow-lg cursor-pointer"
     >
       <input
-        className="leading-none w-full py-4 sm:py-5 px-11 sm:px-16 rounded-lg text-xs sm:text-body dark:bg-gray-800 dark:hover:bg-gray-900 hover:bg-gray-200 cursor-pointer"
+        className="cursor-text leading-none w-full py-4 sm:py-5 px-11 sm:px-16 rounded-lg text-xs sm:text-body dark:bg-gray-800 dark:hover:bg-gray-900 hover:bg-gray-200"
         type="text"
         placeholder="Create a new todo..."
         value={todo}
