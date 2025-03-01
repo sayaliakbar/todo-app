@@ -1,16 +1,13 @@
 import { useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+
 
 export default function CreateTodo() {
-  const [todoList, setTodoList] = useState([]);
+
 
   const inputRef = useRef(null);
   const handleSubmit = (e) => {
     e.preventDefault();
-    let newTask = { task: inputRef.current.value, id: uuidv4() };
-    setTodoList(todoList.push(newTask));
-    console.log(todoList);
-    console.log(newTask);
+    
   };
   return (
     <form
