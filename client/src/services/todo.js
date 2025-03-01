@@ -33,6 +33,7 @@ export const todoApi = createApi({
         url: `${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Todos"], // Refetch todos after toggling
     }),
   }),
 });
