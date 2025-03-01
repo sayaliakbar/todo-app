@@ -1,8 +1,8 @@
 import crossIcon from "../assets/images/icon-cross.svg";
 import PropTypes from "prop-types";
-import { useToggleTodoMutation } from '../services/todo.js'
+import { useToggleTodoMutation } from "../services/todo.js";
 
-export default function TodoListTask({ text, id , status,}) {
+export default function TodoListTask({ text, id, status }) {
   TodoListTask.propTypes = {
     text: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
@@ -11,12 +11,10 @@ export default function TodoListTask({ text, id , status,}) {
 
   const [toggleTodo] = useToggleTodoMutation();
 
-  
-const handleStatusChange = async (e) => {
-await toggleTodo(e.target.id);
-}
+  const handleStatusChange = async (e) => {
+    await toggleTodo(e.target.id);
+  };
 
-  
   return (
     <li className="border-b dark:border-white/50 border-black/25 py-3 sm:py-4 pl-11 sm:pl-16 pr-10 relative group hover:bg-gray-200 dark:hover:bg-gray-900 cursor-pointer break-words">
       <input

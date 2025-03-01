@@ -1,30 +1,21 @@
-import { useAddTodoMutation } from '../services/todo.js'
-import {useState} from "react";
-
+import { useAddTodoMutation } from "../services/todo.js";
+import { useState } from "react";
 
 export default function CreateTodo() {
-  const [todo,setTodo]=useState('');
+  const [todo, setTodo] = useState("");
 
   const [addTodo] = useAddTodoMutation();
-  
 
-
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-   
- 
-  
-  try {
-    await addTodo(todo);
-    
-   
-  } catch (error) {
-    console.log(error);
-  }finally{
-    setTodo('');
-    
-  }
-    
+
+    try {
+      await addTodo(todo);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setTodo("");
+    }
   };
   return (
     <form
