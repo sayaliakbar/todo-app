@@ -1,19 +1,19 @@
 import crossIcon from "../assets/images/icon-cross.svg";
 import PropTypes from "prop-types";
-import axios from "axios";
-
-const apiUrl = import.meta.env.VITE_API_URL;
+import { useToggleTodoMutation } from '../services/todo.js'
 
 export default function TodoListTask({ text, id , status,}) {
   TodoListTask.propTypes = {
     text: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     status: PropTypes.bool.isRequired,
-    setTodoList: PropTypes.func.isRequired,
   };
+
+  const [toggleTodo] = useToggleTodoMutation();
+
   
 const handleStatusChange = async (e) => {
-await axios.put(`${apiUrl}/api/todos/${e.target.id}/toggle`);
+await toggleTodo(e.target.id);
 }
 
   
