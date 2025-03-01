@@ -1,10 +1,19 @@
 import TodoListFooter from "./TodoListFooter";
 import TodoListTask from "./TodoListTask";
+import { useState } from "react";
 
 import { useGetTodosQuery } from "../services/todo.js";
 
 export default function TodoList() {
   const { data, error, isLoading } = useGetTodosQuery();
+  const [filter, setFilter] = useState("all");
+
+  const todos = data?.todoList;
+  const filteredTodos = todos?.filter((todo) => {
+    if (filter === "active") return !todo.completed;
+    if (filter === "completed") return todo.completed;
+    return true;
+  });
 
   return (
     <div className="w-full bg-white shadow-2xl rounded-lg overflow-hidden dark:bg-gray-800">
@@ -14,7 +23,7 @@ export default function TodoList() {
         ) : isLoading ? (
           <>Loading...</>
         ) : data ? (
-          data?.todoList.map((todo) => (
+          filteredTodos.map((todo) => (
             <TodoListTask
               key={todo._id}
               id={todo._id}
@@ -26,7 +35,7 @@ export default function TodoList() {
           <>No data</>
         )}
       </ul>
-      <TodoListFooter />
+      <TodoListFooter filter={filter} setFilter={setFilter} />
     </div>
   );
 }
