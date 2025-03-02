@@ -186,3 +186,29 @@ exports.deleteSelectedTodos = async (req, res) => {
     });
   }
 };
+
+exports.toggleAllTodos = async (req, res) => {
+  try {
+    const { completed } = req.body;
+
+    if (completed === undefined) {
+      return res.status(400).json({
+        success: false,
+        error: "Please provide a 'completed' field",
+      });
+    }
+
+    const result = await Todo.updateMany({}, { completed });
+
+    return res.status(200).json({
+      success: true,
+      message: `All todos set to ${completed}`,
+      updatedCount: result.nModified,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
