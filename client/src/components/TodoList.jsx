@@ -5,10 +5,11 @@ import { DndContext } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
-import { useGetTodosQuery } from "../services/todo.js";
+import { useGetTodosQuery, useUpdateOrderMutation } from "../services/todo.js";
 
 export default function TodoList() {
   const { data, error, isLoading } = useGetTodosQuery();
+  const [updateOrderMutation] = useUpdateOrderMutation();
   const [filter, setFilter] = useState("all");
 
   const todos = data?.todoList;
@@ -18,17 +19,21 @@ export default function TodoList() {
     return true;
   });
 
-  console.log(filteredTodos);
-
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (active.id !== over.id) {
-      const oldIndex = todos.findIndex((todo) => todo._id === active.id);
-      const newIndex = todos.findIndex((todo) => todo._id === over.id);
-      const newTodos = [...todos];
-      newTodos.splice(oldIndex, 1);
-      newTodos.splice(newIndex, 0, todos[oldIndex]);
-      console.log(newTodos);
+      const activeIndex = filteredTodos.findIndex(
+        (todo) => todo._id === active.id
+      );
+      const overIndex = filteredTodos.findIndex((todo) => todo._id === over.id);
+
+      const newTodos = [...filteredTodos];
+      newTodos.splice(activeIndex, 1);
+      newTodos.splice(overIndex, 0, filteredTodos[activeIndex]);
+
+      const order = newTodos.map((todo) => todo._id);
+
+      updateOrderMutation(order);
     }
   };
 
