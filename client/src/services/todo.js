@@ -35,6 +35,14 @@ export const todoApi = createApi({
       }),
       invalidatesTags: ["Todos"], // Refetch todos after toggling
     }),
+    deleteSelectedTodos: builder.mutation({
+      query: (ids) => ({
+        url: `deleteSelected`,
+        method: "DELETE",
+        body: { ids },
+      }),
+      invalidatesTags: ["Todos"], // Refetch todos after toggling
+    }),
   }),
 });
 
@@ -45,4 +53,5 @@ export const {
   useAddTodoMutation,
   useDeleteTodoMutation,
   useToggleTodoMutation,
+  useDeleteSelectedTodosMutation,
 } = todoApi;
