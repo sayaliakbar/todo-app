@@ -37,7 +37,7 @@ export const todoApi = createApi({
     }),
     deleteSelectedTodos: builder.mutation({
       query: (ids) => ({
-        url: `deleteSelected`,
+        url: "",
         method: "DELETE",
         body: { ids },
       }),
