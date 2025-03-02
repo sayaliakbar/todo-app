@@ -26,10 +26,10 @@ export default function TodoListFooter({ filter, setFilter }) {
   };
 
   return (
-    <div className=" flex justify-between text-xs sm:text-sm p-4 text-black/50 dark:text-white/50">
+    <div className=" flex justify-between text-[10px] sm:text-sm p-4 text-black/50 dark:text-white/50">
       <p>{itemsLeft} items left</p>
       <div>
-        <div className="flex flex-row gap-4 font-bold text-black/50">
+        <div className="flex flex-row gap-2 sm:gap-4 font-bold text-black/50">
           <button
             onClick={() => setFilter("all")}
             className={`${
