@@ -149,3 +149,40 @@ exports.toggleTodoStatus = async (req, res) => {
     });
   }
 };
+
+// @desc Delete multiple todos
+// @route DELETE /api/todos/bulk
+// @access Public
+
+exports.deleteSelectedTodos = async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: "Please provide an array of todo IDs",
+      });
+    }
+
+    const result = await Todo.deleteMany({ _id: { $in: ids } });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({
+        success: false,
+        error: "No todos found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `${result.deletedCount} todos deleted`,
+      deletedCount: result.deletedCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
