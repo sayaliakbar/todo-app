@@ -43,6 +43,14 @@ export const todoApi = createApi({
       }),
       invalidatesTags: ["Todos"], // Refetch todos after toggling
     }),
+    toggleAllTodos: builder.mutation({
+      query: (completed) => ({
+        url: "",
+        method: "PUT",
+        body: { completed },
+      }),
+      invalidatesTags: ["Todos"], // Refetch todos after toggling
+    }),
   }),
 });
 
@@ -54,4 +62,5 @@ export const {
   useDeleteTodoMutation,
   useToggleTodoMutation,
   useDeleteSelectedTodosMutation,
+  useToggleAllTodosMutation,
 } = todoApi;
