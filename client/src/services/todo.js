@@ -51,6 +51,14 @@ export const todoApi = createApi({
       }),
       invalidatesTags: ["Todos"], // Refetch todos after toggling
     }),
+    updateOrder: builder.mutation({
+      query: (order) => ({
+        url: "update-order",
+        method: "PUT",
+        body: { order },
+      }),
+      invalidatesTags: ["Todos"], // Refetch todos after toggling
+    }),
   }),
 });
 
@@ -63,4 +71,5 @@ export const {
   useToggleTodoMutation,
   useDeleteSelectedTodosMutation,
   useToggleAllTodosMutation,
+  useUpdateOrderMutation,
 } = todoApi;
