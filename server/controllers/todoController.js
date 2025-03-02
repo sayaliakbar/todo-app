@@ -6,7 +6,7 @@ const Todo = require("../models/Todo");
 
 exports.getTodos = async (req, res) => {
   try {
-    const todos = await Todo.find();
+    const todos = await Todo.find().sort({ order: 1 });
 
     return res.status(200).json({
       success: true,
@@ -26,9 +26,10 @@ exports.getTodos = async (req, res) => {
 // @access Public
 
 exports.addTodo = async (req, res) => {
-  console.log(req.body);
   try {
     const { title } = req.body;
+    const todos = await Todo.find().sort({ order: 1 });
+    const order = todos.length ? todos[todos.length - 1].order + 1 : 0;
 
     if (!title) {
       return res.status(400).json({
@@ -37,7 +38,7 @@ exports.addTodo = async (req, res) => {
       });
     }
 
-    const todo = await Todo.create(req.body);
+    const todo = await Todo.create({ title, order });
 
     return res.status(201).json({
       success: true,
