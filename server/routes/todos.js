@@ -9,6 +9,7 @@ const {
   toggleTodoStatus,
   deleteSelectedTodos,
   toggleAllTodos,
+  updateOrder,
 } = require("../controllers/todoController");
 
 router
@@ -17,6 +18,8 @@ router
   .post(addTodo)
   .delete(deleteSelectedTodos)
   .put(toggleAllTodos);
+
+router.route("/update-order").put(updateOrder);
 
 router.route("/:id").put(updateTodo).delete(deleteTodo);
 
