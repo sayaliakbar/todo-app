@@ -8,11 +8,15 @@ const {
   updateTodo,
   toggleTodoStatus,
   deleteSelectedTodos,
+  toggleAllTodos,
 } = require("../controllers/todoController");
 
-router.route("/").get(getTodos).post(addTodo);
-
-router.route("/deleteSelected").delete(deleteSelectedTodos);
+router
+  .route("/")
+  .get(getTodos)
+  .post(addTodo)
+  .delete(deleteSelectedTodos)
+  .put(toggleAllTodos);
 
 router.route("/:id").put(updateTodo).delete(deleteTodo);
 
