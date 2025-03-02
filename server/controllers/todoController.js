@@ -213,3 +213,45 @@ exports.toggleAllTodos = async (req, res) => {
     });
   }
 };
+
+exports.updateOrder = async (req, res) => {
+  try {
+    const { order } = req.body;
+
+    if (!order || !Array.isArray(order) || order.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: "Please provide an array of todo IDs",
+      });
+    }
+
+    // Verify all IDs exist in the database
+    const existingTodos = await Todo.find({ _id: { $in: order } });
+
+    if (existingTodos.length !== order.length) {
+      return res.status(404).json({
+        success: false,
+        error: "One or more todo IDs do not exist",
+      });
+    }
+
+    const bulkOps = order.map((id, index) => ({
+      updateOne: {
+        filter: { _id: id },
+        update: { order: index },
+      },
+    }));
+
+    await Todo.bulkWrite(bulkOps);
+
+    return res.status(200).json({
+      success: true,
+      message: "Todo order updated",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
