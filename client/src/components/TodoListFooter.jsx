@@ -1,4 +1,7 @@
-import { useGetTodosQuery } from "../services/todo";
+import {
+  useGetTodosQuery,
+  useDeleteSelectedTodosMutation,
+} from "../services/todo";
 
 import PropTypes from "prop-types";
 
@@ -12,6 +15,15 @@ export default function TodoListFooter({ filter, setFilter }) {
   const todos = data?.todoList;
   const activeTodos = todos?.filter((todo) => !todo.completed);
   const itemsLeft = activeTodos?.length;
+
+  const [deleteSelectedTodos] = useDeleteSelectedTodosMutation();
+
+  const handleDeleteSelected = () => {
+    const selectedIds = todos
+      .filter((todo) => todo.completed)
+      .map((todo) => todo._id);
+    deleteSelectedTodos(selectedIds);
+  };
 
   return (
     <div className=" flex justify-between text-xs sm:text-sm p-4 text-black/50 dark:text-white/50">
@@ -45,7 +57,15 @@ export default function TodoListFooter({ filter, setFilter }) {
         </div>
       </div>
 
-      <button className="hover:text-black dark:hover:text-white">
+      <button
+        disabled={todos?.every((todo) => !todo.completed)}
+        onClick={handleDeleteSelected}
+        className={`${
+          !todos?.every((todo) => !todo.completed)
+            ? "hover:text-black dark:hover:text-white"
+            : ""
+        }`}
+      >
         Clear Completed
       </button>
     </div>
