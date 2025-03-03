@@ -37,7 +37,7 @@ export default function TodoListTask({ text, id, status }) {
     <li
       ref={setNodeRef}
       style={style}
-      className="border-b dark:border-white/50 border-black/25 flex py-3 sm:py-4 pl-11 sm:pl-16 pr-10 relative group hover:bg-gray-200 dark:hover:bg-gray-900 cursor-pointer break-words"
+      className="touch-none border-b dark:border-white/50 border-black/25 flex py-3 sm:py-4 pl-11 sm:pl-16 pr-10 relative group hover:bg-gray-200 dark:hover:bg-gray-900 cursor-pointer break-words"
     >
       {error ? (
         <div className="text-red-500 text-sm">Error: {error.status} </div>
