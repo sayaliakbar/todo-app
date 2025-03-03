@@ -48,8 +48,17 @@ export default function TodoList() {
     }
   };
 
-  const pointerSensor = useSensor(PointerSensor);
-  const touchSensor = useSensor(TouchSensor);
+  const pointerSensor = useSensor(PointerSensor, {
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 2000,
+      tolerance: 5,
+    },
+  });
   const keyboardSensor = useSensor(KeyboardSensor, {
     coordinateGetter: sortableKeyboardCoordinates,
   });
