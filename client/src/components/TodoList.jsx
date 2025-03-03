@@ -1,8 +1,19 @@
 import TodoListFooter from "./TodoListFooter";
 import TodoListTask from "./TodoListTask";
 import { useState } from "react";
-import { DndContext } from "@dnd-kit/core";
-import { SortableContext } from "@dnd-kit/sortable";
+import {
+  closestCorners,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 import { useGetTodosQuery, useUpdateOrderMutation } from "../services/todo.js";
@@ -37,6 +48,14 @@ export default function TodoList() {
     }
   };
 
+  const pointerSensor = useSensor(PointerSensor);
+  const touchSensor = useSensor(TouchSensor);
+  const keyboardSensor = useSensor(KeyboardSensor, {
+    coordinateGetter: sortableKeyboardCoordinates,
+  });
+
+  const sensors = useSensors(pointerSensor, touchSensor, keyboardSensor);
+
   return (
     <div className="w-full bg-white shadow-2xl rounded-lg overflow-hidden dark:bg-gray-800">
       <ul className="overflow-y-auto max-h-64 w-full  flex flex-col">
@@ -46,8 +65,10 @@ export default function TodoList() {
           <>Loading...</>
         ) : data ? (
           <DndContext
+            sensors={sensors}
             modifiers={[restrictToVerticalAxis]}
             onDragEnd={handleDragEnd}
+            collisionDetection={closestCorners}
           >
             <SortableContext items={filteredTodos.map((todo) => todo._id)}>
               {filteredTodos.map((todo) => (
