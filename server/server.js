@@ -29,6 +29,13 @@ app.use((req, res, next) => {
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
+} else if (process.env.NODE_ENV === "production") {
+  app.use(morgan("combined"));
+} else {
+  console.error(
+    "Invalid NODE_ENV value. Please check your .env file.".red.underline.bold
+  );
+  process.exit(1);
 }
 
 app.use("/api/todos", todos);
@@ -40,7 +47,18 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
-  );
+  if (process.env.NODE_ENV === "development") {
+    console.log(
+      `Server running in development mode on port ${PORT}`.yellow.bold
+    );
+  } else if (process.env.NODE_ENV === "production") {
+    console.log(
+      `Server running in production mode on port ${PORT}`.yellow.bold
+    );
+  } else {
+    console.error(
+      "Invalid NODE_ENV value. Please check your .env file.".red.underline.bold
+    );
+    process.exit(1);
+  }
 });
