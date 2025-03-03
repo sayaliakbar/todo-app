@@ -67,7 +67,7 @@ export default function TodoList() {
 
   return (
     <div className="w-full bg-white shadow-2xl rounded-lg overflow-hidden dark:bg-gray-800">
-      <ul className="overflow-y-auto max-h-96 md:max-h-64 w-full  flex flex-col">
+      <ul className="overflow-y-auto max-h-96 w-full  flex flex-col">
         {error ? (
           <>Oh no, there was an error</>
         ) : isLoading ? (
