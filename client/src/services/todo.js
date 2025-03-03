@@ -6,8 +6,6 @@ const apiUrl =
     ? import.meta.env.VITE_API_URL
     : import.meta.env.VITE_API_URL_PROD;
 
-console.log(apiUrl);
-
 // Define a service using a base URL and expected endpoints
 export const todoApi = createApi({
   reducerPath: "todoApi",
